@@ -1,5 +1,3 @@
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
 
 $(document).ready(function() {
        
@@ -8,25 +6,35 @@ $(document).ready(function() {
     var winsCounter = 0;
     var lossesCounter = 0;
     var guesses = 10
+    var sofar = []
 
-    var computerPick = alphabet[Math.floor(Math.random() * alphabet.lenght)];
+    var computerPick = alphabet[Math.floor(Math.random() * alphabet.length)];
 
+    function resetgame(){
+        guesses = 10
+        computerPick = alphabet[Math.floor(Math.random() * alphabet.length)];
+        sofar = []
+    }
+    
 document.onkeyup = function(event) {
     var userGuess = event.key;
     if(userGuess === computerPick){
-        winsCounter++
+        winsCounter++ 
+        resetgame()
     }else{
         guesses--
+        sofar.push (event.key)        
     }
     
     if(guesses === 0){
-        losses++
+        lossesCounter++
+        resetgame()
     }
 
-    document.getElementById("#Wins") = "Wins: " + wins;
-    document.getElementById("#Losses") = "Losses: " + losses;
-    document.getElementById("#Guesses") = "Guesses left: " + guesses;
-
+    document.getElementById("Wins").textContent = "Wins: " + winsCounter;
+    document.getElementById("Losses").textContent = "Losses: " + lossesCounter;
+    document.getElementById("Guesses").textContent = "Guesses left: " + guesses;
+    document.getElementById("sofar").textContent = "Guesses so far: " + sofar.join();
     }
 
 
